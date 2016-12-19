@@ -1,0 +1,14 @@
+安装和升级Docker
+您可以通过阿里云的镜像仓库下载： mirrors.aliyun.com/help/docker-engine
+curl -sSL http://acs-public-mirror.oss-cn-hangzhou.aliyuncs.com/docker-engine/internet | sh -
+
+
+
+配置Docker加速器
+您可以使用如下的脚本将mirror的配置添加到docker daemon的启动参数中。
+
+# 系统要求 CentOS 7 以上，Docker 1.9 以上。
+cp -n /lib/systemd/system/docker.service /etc/systemd/system/docker.service
+sed -i "s|ExecStart=/usr/bin/docker daemon|ExecStart=/usr/bin/docker daemon --registry-mirror=https://3dtofa30.mirror.aliyuncs.com|g" /etc/systemd/system/docker.service
+systemctl daemon-reload
+service docker restart
